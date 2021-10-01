@@ -10,7 +10,7 @@ int main(void)
 
     // Initialized array size
     int m = 20;
-    int x[m], u[m], u0[m];
+    double x[m], u[m], u0[m];
     for (int i = -2; i <= m+2; i++)
     {
         x[i] = 0;
@@ -55,4 +55,10 @@ int main(void)
         u[m + 1] = u[1];
         u[m + 2] = u[2];
     }
+
+    for(int i = -2;i <= 20; i++)
+    {
+        cout << u[i] << endl;
+    }
 }
+  
