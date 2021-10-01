@@ -10,7 +10,7 @@ int main(void)
 
     // Initialized array size
     int m = 20;
-    int x[m], u[m], u0[m];
+    double x[m], u[m], u0[m];
     for (int i = -2; i <= m+2; i++)
     {
         x[i] = 0;
@@ -30,7 +30,7 @@ int main(void)
     // second step. initial data
     for (int i = 0; i <= m; i++)
     {
-        u[i + 2] = sin(2 * M_PI * x[i]);
+        u[i] = sin(2 * M_PI * x[i]);
     }
 
     // thrid step. B.C.
@@ -54,5 +54,10 @@ int main(void)
         u[-1] = u[m -1];
         u[m + 1] = u[1];
         u[m + 2] = u[2];
+    }
+
+    for (int i = -2; i <= m + 2; i++)
+    {
+        cout << u0[i] << " ";
     }
 }
