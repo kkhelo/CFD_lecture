@@ -56,8 +56,9 @@ int main(void)
         u[m + 2] = u[2];
     }
 
-    for (int i = -2; i <= m + 2; i++)
+    for(int i = -2;i <= 20; i++)
     {
-        cout << u0[i] << " ";
+        cout << u[i] << endl;
     }
 }
+  
