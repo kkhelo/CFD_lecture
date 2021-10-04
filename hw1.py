@@ -33,13 +33,12 @@ callBC()
 
 # Step4 : PDE(FDM), main part of the program 
 t = 0
+plt.plot(x,u,'r-*', label = 'u(x,0)')
 while(t <= 2):
     print(t)
     u0 = u.copy()
     FDM(u,u0)
     callBC()
-    if(t == 0):
-        plt.plot(x,u,'r-*', label = 'u(x,0)')
     t = round(t + DT, 2)    # Round off the two decimal places
 
 # Step5 : Plotting 
