@@ -50,9 +50,9 @@ while(round(t + DT, 2) <= 2):
 
 # Step5 : Plotting 
 plt.plot(x,u,'b-o', label = 'u(x,2)')
-plt.title("u(x,0) compare to  u(x,2)")
+plt.title("u(x,0) vs. u(x,2)")
 plt.xlabel("x")
-plt.xlabel("u(x,t)")
+plt.ylabel("u(x,t)")
 plt.grid(True)
 plt.legend()
 plt.savefig("hw1.png")
