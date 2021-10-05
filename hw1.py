@@ -1,3 +1,9 @@
+## Author : Bo Yuan You 
+## Date 2021/10/01
+## CFD homework 2 
+## Lecture p6~p7
+## Finite Difference Method on periodic B.C.
+
 import numpy as np
 import matplotlib.pyplot as plt
 # Step0 : Set dimension 
@@ -34,15 +40,16 @@ callBC()
 # Step4 : PDE(FDM), main part of the program 
 t = 0
 plt.plot(x,u,'r-*', label = 'u(x,0)')
-while(t <= 2):
+while(round(t + DT, 2) <= 2):
+    t = round(t + DT, 2)    # Round off the two decimal places
     print(t)
     u0 = u.copy()
     FDM(u,u0)
     callBC()
-    t = round(t + DT, 2)    # Round off the two decimal places
+
 
 # Step5 : Plotting 
-plt.plot(x,u,'b-*', label = 'u(x,2)')
+plt.plot(x,u,'b-o', label = 'u(x,2)')
 plt.title("u(x,0) compare to  u(x,2)")
 plt.xlabel("x")
 plt.xlabel("u(x,t)")
@@ -50,4 +57,3 @@ plt.grid(True)
 plt.legend()
 plt.savefig("hw1.png")
 plt.show()
-
