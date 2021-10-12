@@ -44,7 +44,7 @@ while(round(t + DT, 2) <= 2):
     t = round(t + DT, 2)    # Round off the two decimal places
     print(t)
     u0 = u.copy()
-    FDM(u,u0)
+    FDM(u,u0) 
     callBC()
 
 
