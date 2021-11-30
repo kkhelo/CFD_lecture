@@ -43,8 +43,7 @@ plt.plot(x,u,'r-*', label = 'u(x,0)')
 while(round(t + DT, 2) <= 2):
     t = round(t + DT, 2)    # Round off the two decimal places
     u0 = u.copy()
-    FDM(u,u0)
-    print(u)
+    FDM(u,u0) 
     callBC()
 
 
