@@ -13,25 +13,27 @@ class Euler_explicit_scheme():
         self.M = M        
         self.DX = 1/M
         self.DT = round(CFL * self.DX, 3)
-        self.Xgrid = np.linspace(0-1.5*self.DX, 1+0.5*self.DX, self.M+3)
-        self.u = np.zeros(M+3)
-        self.u0 = np.zeros(M+3)
-        self.f = np.zeros(M+2)
+        self.Xgrid = np.linspace(0-2.5*self.DX, 1+1.5*self.DX, self.M+5)
+        self.u = np.zeros(M+5)
+        self.u0 = np.zeros(M+5)
+        self.f = np.zeros(M+4)
 
     def init_data(self) -> None:
         for i in range(self.M+1):
-            self.u[i+1] = np.sin(2*np.pi*self.Xgrid[i+1])
+            self.u[i+2] = np.sin(2*np.pi*self.Xgrid[i+2])
 
     def call_BC(self, arr) -> None:
         arr[0] = arr[self.M]
-        arr[self.M+2] = arr[2]
+        arr[1] = arr[self.M+1]
+        arr[self.M+3] = arr[3]
+        arr[self.M+4] = arr[4]
 
     def solver(self, t) -> None:
         print(f'Using Euler explicit solver : t = {t:.2f}')
-        for i in range(self.M+2):
+        for i in range(self.M+4):
             self.f[i] = 0.5 * (self.u[i] + self.u[i+1])
-        for i in range(self.M + 1):
-            self.u[i+1] = self.u0[i+1] - (self.DT/self.DX*(self.f[i+1] - self.f[i]))
+        for i in range(self.M+1):
+            self.u[i+2] = self.u0[i+2] - (self.DT/self.DX*(self.f[i+2] - self.f[i+1]))
 
     def PDE_solver(self) -> None:
         t = 0

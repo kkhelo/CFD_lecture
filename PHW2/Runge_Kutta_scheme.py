@@ -11,27 +11,26 @@ from euler_scheme import Euler_explicit_scheme
 class Runge_Kutta_two_steps(Euler_explicit_scheme):
     def __init__(self, CFL, M) -> None:
         super().__init__(CFL, M)
-        self.u1 = np.zeros(M+3)
-        self.u2 = np.zeros(M+3)
-        self.f1 = np.zeros(M+2)
+        self.u1 = np.zeros(M+5)
+        self.u2 = np.zeros(M+5)
+        self.f1 = np.zeros(M+4)
 
     def solver(self, t) -> None:
         print(f'Using Runge-Kutta solver: t = {t:.2f}')
-        for i in range(self.M+2):
+        for i in range(self.M+4):
             self.f[i] = 0.5 * (self.u[i] + self.u[i+1])
 
         for i in range(self.M + 1):
-            self.u1[i+1] = self.u0[i+1] - self.DT/self.DX*(self.f[i+1] - self.f[i])
+            self.u1[i+2] = self.u0[i+2] - self.DT/self.DX*(self.f[i+2] - self.f[i+1])
         self.call_BC(self.u1)
 
-        for i in range(self.M+2):
+        for i in range(self.M+4):
             self.f1[i] = 0.5 * (self.u1[i] + self.u1[i+1])
         
         for i in range(self.M + 1):
-            self.u2[i+1] = self.u1[i+1] - self.DT/self.DX*(self.u1[i+1] - self.u1[i])
+            self.u2[i+2] = self.u1[i+2] - self.DT/self.DX*(self.f1[i+2] - self.f1[i+1])
 
         self.u = 0.5 * (self.u2 + self.u).copy()
-        self.call_BC(self.u)
 
 def main():
     start = time.time()
