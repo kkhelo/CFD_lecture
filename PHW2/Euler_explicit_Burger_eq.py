@@ -20,11 +20,11 @@ class Euler_scheme_Burger_eq(Euler_explicit_scheme):
 
     def solver(self, t) -> None:
         print(f'Using Euler explicit solver : t = {t:.3f}')
-        for i in range(self.M+4):
-            self.f[i] = 0.5*(self.u0[i]**2/2 + self.u0[i+1]**2/2 - self.alpha*(self.u0[i+1] - self.u0[i]))
-
         for i in range(self.M+1):
-            self.u[i+2] = self.u0[i+2] - self.DT/self.DX*(self.f[i+2] - self.f[i+1])
+            self.f[i] = 0.5*(self.u0[i+1]**2/2 + self.u0[i+2]**2/2 - self.alpha*(self.u0[i+2] - self.u0[i+1]))
+
+        for i in range(self.M):
+            self.u[i+2] = self.u0[i+2] - self.DT/self.DX*(self.f[i+1] - self.f[i])
         
     def PDE_solver(self) -> None:
         self.u01 = np.zeros(self.M+5)
@@ -66,7 +66,7 @@ def main():
     plt.ylabel('u(x,t)')
     plt.grid(True)
     plt.legend()
-    plt.axis([0, 1, 0, 1])
+    plt.axis([0, 1, 0.2, 0.8])
     
 
     plt.subplot(1,2,2)
@@ -78,7 +78,7 @@ def main():
     plt.ylabel('u(x,t)')
     plt.grid(True)
     plt.legend()
-    plt.axis([0, 1, 0, 1])
+    plt.axis([0, 1, 0.2, 0.8])
 
     plt.savefig("images/Euler_scheme_burger.png")  
     plt.show()

@@ -9,29 +9,28 @@ import time
 from Euler_explicit_Burger_eq import Euler_scheme_Burger_eq
 
 class RK_Burger(Euler_scheme_Burger_eq):
-    def __init__(self, CFL, M, alpha = 0.75) -> None:
-        super().__init__(CFL, M)
-        self.alpha = alpha
-        self.u1 = np.zeros(M+5)
-        self.u2 = np.zeros(M+5)
-        self.f1 = np.zeros(M+4)
+    def __init__(self, CFL, M, alpha=0.75) -> None:
+        super().__init__(CFL, M, alpha=alpha)
+        self.u1 = np.zeros(M+4)
+        self.u2 = np.zeros(M+4)
+        self.f1 = np.zeros(M+1)
 
     def solver(self, t) -> None:
         print(f'Using Runge-Kutta solver: t = {t:.2f}')
-        for i in range(self.M+4):
-            self.f[i] = 0.5*(self.u[i]**2/2 + self.u[i+1]**2/2 - self.alpha*(self.u[i+1] - self.u[i]))
+        for i in range(self.M+1):
+            self.f[i] = 0.5*(self.u0[i+1]**2/2 + self.u0[i+2]**2/2 - self.alpha*(self.u0[i+2] - self.u0[i+1]))
 
-        for i in range(self.M + 1):
-            self.u1[i+2] = self.u0[i+2] - self.DT/self.DX*(self.f[i+2] - self.f[i+1])
+        for i in range(self.M):
+            self.u1[i+2] = self.u0[i+2] - self.DT/self.DX*(self.f[i+1] - self.f[i])
         self.call_BC(self.u1)
 
-        for i in range(self.M+4):
-            self.f1[i] = 0.5*(self.u1[i]**2/2 + self.u1[i+1]**2/2 - self.alpha*(self.u1[i+1] - self.u1[i]))
+        for i in range(self.M+1):
+            self.f1[i] = 0.5*(self.u1[i+2]**2/2 + self.u1[i+1]**2/2 - self.alpha*(self.u1[i+2] - self.u1[i+1]))
         
-        for i in range(self.M + 1):
-            self.u2[i+2] = self.u1[i+2] - self.DT/self.DX*(self.f1[i+2] - self.f1[i+1])
+        for i in range(self.M):
+            self.u2[i+2] = self.u1[i+2] - self.DT/self.DX*(self.f1[i+1] - self.f1[i])
 
-        self.u = 0.5 * (self.u2 + self.u).copy()
+        self.u = 0.5 * (self.u2 + self.u0).copy()
 
 def main():
     start = time.time()
@@ -54,7 +53,7 @@ def main():
     plt.ylabel('u(x,t)')
     plt.grid(True)
     plt.legend()
-    plt.axis([0, 1, 0, 1])
+    plt.axis([0, 1, 0.2, 0.8])
     
 
     plt.subplot(1,2,2)
@@ -66,7 +65,7 @@ def main():
     plt.ylabel('u(x,t)')
     plt.grid(True)
     plt.legend()
-    plt.axis([0, 1, 0, 1])
+    plt.axis([0, 1, 0.2, 0.8])
 
     plt.savefig("images/Runge_Kutta_burger.png")  
     plt.show()
